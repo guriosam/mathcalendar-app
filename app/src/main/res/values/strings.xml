@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">MathCalendar</string>
+    <string name="action_settings">Settings</string>
+    <string name="problem_description">Your math daily problem!</string>
+    <string name="back_button">Past Problem</string>
+    <string name="next_button">Next Problem</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="title_activity_problem">ProblemActivity</string>
+    <string name="no_access">You don\'t have access to this date yet.</string>
+    <string name="answer">Answer</string>
+    <string name="title_activity_answer">Answer</string>
+    <string name="action_back">Back</string>
+    <string name="notification_problem_title">Your daily problem is available.</string>
+    <string name="notification_problem_detail">Click here to see your daily problem!</string>
+    <string name="share_text">Look at this awesome Math\'s problem, try to solve it too.</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="login">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm">Confirm</string>
+    <string name="forgot">Forgot my password</string>
+</resources>
+
