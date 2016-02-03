@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,22 +14,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dd.CircularProgressButton;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import br.com.gods.mathcalendar.utils.DateUtils;
-import de.cketti.shareintentbuilder.ShareIntentBuilder;
 
 public class ProblemActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView image;
     private TextView currentDate;
-    private TextView shareButton;
-    private TextView saveButton;
-    private TextView answerButton;
+    private CircularProgressButton shareButton;
+    private CircularProgressButton saveButton;
+    private CircularProgressButton answerButton;
     private ImageView nextButton;
     private ImageView pastButton;
     private DateUtils dateUtils;
@@ -48,14 +43,11 @@ public class ProblemActivity extends AppCompatActivity implements View.OnClickLi
         setListeners();
         dateUtils = new DateUtils();
 
-
         url = getIntent().getStringExtra("URL");
         String date = getIntent().getStringExtra("DATE");
 
         if(date == null){
             date = dateUtils.getCurrentDate();
-
-
         }
         System.out.println("Url" + url);
         if(url == "" || url == null){
@@ -65,6 +57,7 @@ public class ProblemActivity extends AppCompatActivity implements View.OnClickLi
         Picasso.with(this).load(url).resize(200, 200).into(image);
 
         currentDate.setText(date);
+
 
     }
 
@@ -78,19 +71,15 @@ public class ProblemActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.next_button:
                 Toast.makeText(this, "Next Problem", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.saveBox:
-            case R.id.saveButton:
-
-                //Toast.makeText(this, "Save the problem", Toast.LENGTH_SHORT).show();
+            case R.id.save:
+                Toast.makeText(this, "Save the problem", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.answerBox:
-            case R.id.answerButton:
+            case R.id.answer:
                 Intent intent = new Intent(this, AnswerActivity.class);
                 startActivity(intent);
                 //Toast.makeText(this, "Problem's answer", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.shareBox:
-            case R.id.shareButton:
+            case R.id.share:
                 onShareItem();
                 break;
 
@@ -102,9 +91,9 @@ public class ProblemActivity extends AppCompatActivity implements View.OnClickLi
     private void setViews(){
         image = (ImageView) findViewById(R.id.problem_image);
         currentDate = (TextView) findViewById(R.id.currentDate);
-        shareButton = (TextView) findViewById(R.id.shareButton);
-        saveButton = (TextView) findViewById(R.id.saveButton);
-        answerButton = (TextView) findViewById(R.id.answerButton);
+        shareButton = (CircularProgressButton) findViewById(R.id.share);
+        saveButton = (CircularProgressButton) findViewById(R.id.save);
+        answerButton = (CircularProgressButton) findViewById(R.id.answer);
         nextButton = (ImageView) findViewById(R.id.next_button);
         pastButton = (ImageView) findViewById(R.id.back_button);
     }
@@ -117,8 +106,6 @@ public class ProblemActivity extends AppCompatActivity implements View.OnClickLi
         pastButton.setOnClickListener(this);
 
     }
-
-
 
     @Override
     public void onBackPressed(){

@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements RobotoCalendarVie
     private DateUtils dateUtils;
     private Activity act;
 
+    //Server Key: AIzaSyDj8iHuxpqVXu2j8AULuOQix141QHimFP4
+    //Sender id: 452273936105
+
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,15 +46,15 @@ public class MainActivity extends AppCompatActivity implements RobotoCalendarVie
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-         createScheduledNotification();
+        // createScheduledNotification();
         //createNotification();
         //setAlarm();
-         act = this;
+        act = this;
 
         setCalendarView();
 
-
     }
+
 
     private void createNotification() {
 
@@ -98,9 +101,9 @@ public class MainActivity extends AppCompatActivity implements RobotoCalendarVie
         System.out.println(calendar.getTime());
         System.out.println(System.currentTimeMillis());
         //calendar.set(Calendar.HOUR_OF_DAY, 1);
-        calendar.set(Calendar.MINUTE, 50);
-        //calendar.set(Calendar.SECOND, 15);
-        int interval = 1000 * 60 * 60 * 24;
+        //calendar.set(Calendar.MINUTE, 5);
+        calendar.set(Calendar.SECOND, 15);
+        int interval = 1000 * 60 * 60;// * 24;
 
         Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
         notificationIntent.addCategory("android.intent.category.DEFAULT");
@@ -110,9 +113,9 @@ public class MainActivity extends AppCompatActivity implements RobotoCalendarVie
 
         System.out.println(calendar.getTimeInMillis());
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + 1000000, broadcast);
+        //alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, broadcast);
 
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, broadcast);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, broadcast);
         //alarmManager.setAlarmClock(, broadcast);
 
 

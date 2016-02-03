@@ -21,8 +21,10 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:id="@+id/back_button"
+            android:visibility="gone"
             android:layout_marginLeft="20dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/back_arrow"
+            android:rotation="90"
             android:contentDescription="@string/back_button"/>
 
         <TextView
@@ -37,9 +39,10 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:id="@+id/next_button"
+            android:visibility="gone"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="20dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/next_arrow"
             android:layout_marginRight="20dp"
             android:contentDescription="@string/next_button"/>
 
@@ -66,8 +69,6 @@
                 android:src="@drawable/node"
                 />
 
-
-
         </RelativeLayout>
 
         <View
@@ -80,78 +81,54 @@
         <RelativeLayout
             android:id="@+id/buttonsLayout"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="40dp"
+            android:layout_height="60dp"
+
             android:layout_below="@id/line1">
 
-            <RelativeLayout
-                android:id="@+id/saveBox"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="90dp"
-                android:layout_marginLeft="10dp"
-                android:background="@android:color/holo_red_dark">
-                <TextView
-                    android:id="@+id/saveButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.dd.CircularProgressButton
+                    android:id="@+id/save"
+                    android:layout_width="@dimen/button_w"
+                    android:layout_height="@dimen/button_h"
                     android:layout_centerInParent="true"
-                    android:text="@string/save"
-                    android:textSize="@dimen/date_size"
-                    />
+                    android:textColor="@color/cpb_white"
+                    android:layout_marginRight="20dp"
+                    android:textSize="@dimen/text_size"
+                    app:cpb_cornerRadius="32dp"
+                    app:cpb_textIdle="@string/save" />
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/shareBox"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:layout_centerHorizontal="true"
-                android:layout_toRightOf="@id/saveBox"
-
-                android:background="@android:color/holo_red_dark">
-
-                <TextView
-                    android:id="@+id/shareButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                <com.dd.CircularProgressButton
+                    android:id="@+id/share"
+                    android:layout_width="@dimen/button_w"
+                    android:layout_height="@dimen/button_h"
                     android:layout_centerInParent="true"
-                    android:text="@string/share"
-
-                    android:textSize="@dimen/date_size"
-                    />
-
-
-            </RelativeLayout>
+                    android:textColor="@color/cpb_white"
+                    android:textSize="@dimen/text_size"
+                    app:cpb_cornerRadius="32dp"
+                    app:cpb_textIdle="@string/share" />
 
 
+            </LinearLayout>
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/answerBox"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
+        <com.dd.CircularProgressButton
+            android:id="@+id/answer"
             android:layout_below="@id/buttonsLayout"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/holo_blue_bright">
-
-        <TextView
-            android:id="@+id/answerButton"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
             android:layout_centerInParent="true"
-            android:textSize="@dimen/date_size"
-            android:text="@string/answer"/>
-
-        </RelativeLayout>
+            android:layout_width="@dimen/button_w"
+            android:layout_height="@dimen/button_h"
+            android:textColor="@color/cpb_white"
+            android:textSize="@dimen/text_size"
+            app:cpb_cornerRadius="32dp"
+            app:cpb_textIdle="@string/answer" />
 
     </RelativeLayout>
-
-
-
 
 </RelativeLayout>

@@ -24,8 +24,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.parse.bolts:bolts-android:1.+'
-    compile 'com.parse:parse-android:1.+'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.bowyer.app:parsesendclient:0.1.0@aar'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
@@ -34,5 +32,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
     compile 'com.github.marcohc:robotocalendarview:1.+'
     compile 'de.cketti.share:share-intent-builder:0.0.2'
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
+
 
 }

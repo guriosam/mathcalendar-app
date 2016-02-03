@@ -31,7 +31,7 @@
         </activity>
         <activity
             android:name=".ProblemActivity"
-            android:label="@string/title_activity_problem"
+            android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AnswerActivity"
