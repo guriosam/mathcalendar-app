@@ -21,10 +21,7 @@
     <string name="forgot">Forgot my password</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="select_time">Select the time that you want to receive the notification:</string>
-<<<<<<< HEAD
     <string name="enable_store">You have to enable the store access to your phone. Please go to Settings -> Apps -> MathCalendar -> Permissions and enable it.</string>
-=======
->>>>>>> 25c6c3fc59b2e4d7b97e26f522fb25b117716691
     <string name="facebook_app_id">214686515546313</string>
 </resources>
 
