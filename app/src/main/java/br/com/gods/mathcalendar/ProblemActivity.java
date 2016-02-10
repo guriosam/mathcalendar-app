@@ -51,8 +51,10 @@ public class ProblemActivity extends AppCompatActivity implements View.OnClickLi
         }
         System.out.println("Url" + url);
         if(url == "" || url == null){
-            url = "http://2.bp.blogspot.com/_OfYYlOGGnDk/TKHs_WCjl3I/AAAAAAAAByg/JvFTEHBkgkU/s1600/pastel.jpg";
+            url = "https://imaginary.org/sites/default/files/styles/gallery-full/public/naranja.jpg?itok=rPWoCxBL";
         }
+
+        url = "https://imaginary.org/sites/default/files/styles/gallery-full/public/naranja.jpg?itok=rPWoCxBL";
 
         Picasso.with(this).load(url).resize(200, 200).into(image);
 
@@ -72,7 +74,8 @@ public class ProblemActivity extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(this, "Next Problem", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.save:
-                Toast.makeText(this, "Save the problem", Toast.LENGTH_SHORT).show();
+                onSaveItem();
+                //Toast.makeText(this, "Save the problem", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.answer:
                 Intent intent = new Intent(this, AnswerActivity.class);
@@ -113,27 +116,47 @@ public class ProblemActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void onShareItem() {
-        // Get access to bitmap image from view
-        // Get access to the URI for the bitmap
-        Drawable mDrawable = image.getDrawable();
-        Bitmap mBitmap = ((BitmapDrawable)mDrawable).getBitmap();
 
-        String path = MediaStore.Images.Media.insertImage(getContentResolver(),
-                mBitmap, "Image Description", null);
+        try {
+            // Get access to bitmap image from view
+            // Get access to the URI for the bitmap
+            Drawable mDrawable = image.getDrawable();
+            Bitmap mBitmap = ((BitmapDrawable) mDrawable).getBitmap();
 
-        Uri uri = Uri.parse(path);
+            String path = MediaStore.Images.Media.insertImage(getContentResolver(),
+                    mBitmap, "Image Description", null);
+
+            Uri uri = Uri.parse(path);
 
 
-        String text = getString(R.string.share_text);
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, text);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        shareIntent.setType("image/*");
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivity(Intent.createChooser(shareIntent, "Share images..."));
+            String text = getString(R.string.share_text);
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, text);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/*");
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(Intent.createChooser(shareIntent, "Share images..."));
+
+        } catch(Exception e ){
+            Toast.makeText(this, getString(R.string.enable_store), Toast.LENGTH_SHORT).show();
+        }
 
     }
 
+    public void onSaveItem(){
+        try {
+            Drawable mDrawable = image.getDrawable();
+            Bitmap mBitmap = ((BitmapDrawable) mDrawable).getBitmap();
+
+            String path = MediaStore.Images.Media.insertImage(getContentResolver(),
+                    mBitmap, "Image Description", null);
+
+            Toast.makeText(this, "Problem saved", Toast.LENGTH_SHORT).show();
+
+        }  catch(Exception e ){
+            Toast.makeText(this, getString(R.string.enable_store), Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }
