@@ -53,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // App code
-                Toast.makeText(getApplicationContext(), "SUCCESS", Toast.LENGTH_LONG).show();
-
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
@@ -62,15 +60,30 @@ public class LoginActivity extends AppCompatActivity {
                             public void onCompleted(
                                     JSONObject object,
                                     GraphResponse response) {
-                                // Application code
-                                // Data comes in JSON format, just handle it here!!
-                                System.out.println("LENGTH JSON: " + object.length());
-                                System.out.println("LENGTH GRAPH RESPONSE: " + response.getJSONObject().length());
-                                Toast.makeText(getApplicationContext(), "WE'VE DATA", Toast.LENGTH_LONG).show();
+                                //Application code
+                                //Data comes in JSON format, just handle it here!!
+                                /*try {
+                                    System.out.println("LENGTH GRAPH RESPONSE: " + response.getJSONObject().length());
+                                    System.out.println("CONTENT GRAPH RESPONSE: " + response.getJSONObject().toString());
+
+                                    PersonData personData = new PersonData();
+                                    personData.setId(response.getJSONObject().getString("id"));
+                                    personData.setName(response.getJSONObject().getString("name"));
+                                    personData.setBirthday(response.getJSONObject().getString("birthday"));
+                                    personData.setEmail(response.getJSONObject().getString("email"));
+                                    personData.setGender(response.getJSONObject().getString("gender"));
+                                    personData.setLink(response.getJSONObject().getString("link"));
+                                    personData.setTimezone(response.getJSONObject().getString("timezone"));
+                                    personData.setCover(response.getJSONObject().getString("cover"));
+                                    System.out.println(personData.toString());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }*/
+                                Toast.makeText(getApplicationContext(), "SUCCESS, WE'VE DATA", Toast.LENGTH_LONG).show();
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,birthday,email,gender,link,timezone,locale,cover");
+                parameters.putString("fields", "id,name,birthday,email,gender,link,timezone,cover");
                 request.setParameters(parameters);
                 request.executeAsync();
             }
@@ -84,12 +97,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException exception) {
                 // App code
-                Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
-                // OR
                 Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     @Override
