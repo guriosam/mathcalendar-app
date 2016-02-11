@@ -1,31 +1,23 @@
 package br.com.gods.mathcalendar;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.marcohc.robotocalendar.RobotoCalendarView;
+import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import br.com.gods.mathcalendar.notifications.ScheduleNotification;
 import br.com.gods.mathcalendar.utils.DateUtils;
+import br.com.gods.mathcalendar.utils.LocalCache;
 import br.com.gods.mathcalendar.utils.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity implements RobotoCalendarView.RobotoCalendarListener {
@@ -36,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements RobotoCalendarVie
     private DateUtils dateUtils;
     private Activity act;
 
-     @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -45,7 +37,13 @@ public class MainActivity extends AppCompatActivity implements RobotoCalendarVie
 
         act = this;
 
-        setCalendarView();
+         try {
+             setCalendarView();
+
+         } catch(Exception e){
+             Toast.makeText(act, act.getString(R.string.general_error), Toast.LENGTH_SHORT).show();
+             act.finish();
+         }
 
     }
 
@@ -107,33 +105,53 @@ public class MainActivity extends AppCompatActivity implements RobotoCalendarVie
 
         }
 
+        LocalCache.getInstance().setDay(day);
+        LocalCache.getInstance().setMonth(month);
+
         String actualYear = "" + year;
 
         actualYear = 20 + actualYear.substring(1,3);
 
         month++;
 
-
-        MyCalendar myCalendar = new MyCalendar(day, month);
         String date = "";
-
-
+        String url = "";
 
         if (month < 10) {
             if (day < 10) {
                 date = "0" + day + "/0" + month + "/" + actualYear;
+                url = "http://ap.imagensbrasil.org/images/problema-" + "0" + month + "-" + "0" + day;
             } else {
                 date = day + "/0" + month + "/" + actualYear;
+                url = "http://ap.imagensbrasil.org/images/problema-" + "0" + month + "-" + day;
             }
         } else {
             if (day < 10) {
                 date = "0" + day + "/" + month + "/" + actualYear;
+                url = "http://ap.imagensbrasil.org/images/problema-" + month + "-" + "0" + day;
             } else {
                 date = day + "/" + month + "/" + actualYear;
+                url = "http://ap.imagensbrasil.org/images/problema-" + month + "-" + day;
             }
         }
 
-        String url = myCalendar.getDailyImage();
+        url += ".png";
+
+        System.out.println(url);
+
+        Picasso.with(this).load(url).fetch(new com.squareup.picasso.Callback() {
+            @Override
+            public void onSuccess() {
+                //Success image already loaded into the view
+            }
+
+            @Override
+            public void onError() {
+                //Error placeholder image already loaded into the view, do further handling of this situation here
+
+                Toast.makeText(act, act.getString(R.string.error_load_image), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Intent intent = new Intent(act, ProblemActivity.class);
         intent.putExtra("URL", url);
@@ -141,23 +159,6 @@ public class MainActivity extends AppCompatActivity implements RobotoCalendarVie
 
         startActivity(intent);
 
-        // Mark that day with random colors
-       /* final Random random = new Random(System.currentTimeMillis());
-        final int style = random.nextInt(3);
-        switch (style) {
-            case 0:
-                robotoCalendarView.markFirstUnderlineWithStyle(RobotoCalendarView.BLUE_COLOR, date);
-                break;
-            case 1:
-                robotoCalendarView.markSecondUnderlineWithStyle(RobotoCalendarView.GREEN_COLOR, date);
-                break;
-            case 2:
-                robotoCalendarView.markFirstUnderlineWithStyle(RobotoCalendarView.RED_COLOR, date);
-                break;
-            default:
-                break;
-        }
-        */
     }
 
     @Override

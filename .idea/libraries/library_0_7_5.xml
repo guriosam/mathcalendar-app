@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="library-0.7.5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mikepenz.iconics/library/0.7.5/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mikepenz.iconics/library/0.7.5/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mikepenz.iconics/library/0.7.5/690b9f40f9bfe540f9f7494fee90618634910572/library-0.7.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

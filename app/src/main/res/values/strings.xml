@@ -23,5 +23,7 @@
     <string name="select_time">Select the time that you want to receive the notification:</string>
     <string name="enable_store">You have to enable the store access to your phone. Please go to Settings -> Apps -> MathCalendar -> Permissions and enable it.</string>
     <string name="facebook_app_id">214686515546313</string>
+    <string name="error_load_image">There is not problem for weekends or holidays.</string>
+    <string name="general_error">Sorry, something unexpected happened.</string>
 </resources>
 

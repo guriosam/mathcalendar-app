@@ -41,4 +41,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.orhanobut:dialogplus:1.11@aar'
     compile 'com.facebook.android:facebook-android-sdk:4.+'
+    compile 'com.orhanobut:dialogplus:1.11@aar'
+    compile 'com.mikepenz.iconics:library:0.7.5@aar'
 }

@@ -9,9 +9,7 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
 
-import br.com.gods.mathcalendar.MainActivity;
 import br.com.gods.mathcalendar.R;
 
 /**

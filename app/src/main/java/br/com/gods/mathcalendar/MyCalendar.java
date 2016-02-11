@@ -1,7 +1,5 @@
 package br.com.gods.mathcalendar;
 
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +10,9 @@ public class MyCalendar {
 
     private int day;
     private int month;
+
+    //
+
     private List<String> jan;
     private List<String> feb;
     private List<String> mar;
