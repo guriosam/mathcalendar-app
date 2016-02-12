@@ -1,6 +1,8 @@
 package br.com.gods.mathcalendar;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,89 +16,121 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
+
+import br.com.gods.mathcalendar.communication.MathCalendarApplication;
+import br.com.gods.mathcalendar.communication.UserData;
+import br.com.gods.mathcalendar.communication.UserService;
+
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText email;
-    private EditText password;
-    private Button confirm;
-    private Button forgot;
+    private LoginButton loginButton;
+    private ProfileTracker profileTracker;
+    private CallbackManager callbackManager;
 
-    LoginButton loginButton;
-    CallbackManager callbackManager;
+    private UserService userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Initialize the SDK before executing any other operations,
-        // especially, if you're using Facebook UI elements.
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
+        userService = MathCalendarApplication.getMathCalendarApplicationContext().getServiceFactory().createService(UserService.class);
+
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                // Track User Profile
+                // If logged, call MainActivity Class
+            }
+        };
 
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        email = (EditText) findViewById(R.id.email_input);
-        password = (EditText) findViewById(R.id.password_input);
+        EditText email = (EditText) findViewById(R.id.email_input);
+        EditText password = (EditText) findViewById(R.id.password_input);
 
-        confirm = (Button) findViewById(R.id.confirm_button);
-        forgot = (Button) findViewById(R.id.forgot_button);
+        Button confirm = (Button) findViewById(R.id.confirm_button);
+        Button forgot = (Button) findViewById(R.id.forgot_button);
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                // App code
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
+                            @TargetApi(Build.VERSION_CODES.KITKAT)
                             @Override
                             public void onCompleted(
                                     JSONObject object,
                                     GraphResponse response) {
-                                //Application code
-                                //Data comes in JSON format, just handle it here!!
-                                /*try {
-                                    System.out.println("LENGTH GRAPH RESPONSE: " + response.getJSONObject().length());
-                                    System.out.println("CONTENT GRAPH RESPONSE: " + response.getJSONObject().toString());
+                                try {
+                                    final UserData userData = new UserData();
+                                    if (!Objects.equals(response.getJSONObject().getString("id"), ""))
+                                        userData.setId(response.getJSONObject().getString("id"));
+                                    if (!Objects.equals(response.getJSONObject().getString("name"), ""))
+                                        userData.setName(response.getJSONObject().getString("name"));
+                                    if (!Objects.equals(response.getJSONObject().getString("birthday"), ""))
+                                        userData.setBirthday(response.getJSONObject().getString("birthday"));
+                                    if (!Objects.equals(response.getJSONObject().getString("email"), ""))
+                                        userData.setEmail(response.getJSONObject().getString("email"));
+                                    if (!Objects.equals(response.getJSONObject().getString("gender"), ""))
+                                        userData.setGender(response.getJSONObject().getString("gender"));
+                                    if (!Objects.equals(response.getJSONObject().getString("link"), ""))
+                                        userData.setLink(response.getJSONObject().getString("link"));
+                                    if (!Objects.equals(response.getJSONObject().getString("timezone"), ""))
+                                        userData.setTimezone(response.getJSONObject().getString("timezone"));
+                                    if (!Objects.equals(response.getJSONObject().getString("cover"), ""))
+                                        userData.setCover(response.getJSONObject().getString("cover"));
+                                    Thread t = new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            userService.userData(userData.getName(), userData.getBirthday(), userData.getEmail(), userData.getVip());
+                                                // DEIXA ISSO AQUI TALVEZ PRECISE
+                                                    /*, new BaseListFragment().new DefaulServiceCallback<ErrorResponse>() {
 
-                                    PersonData personData = new PersonData();
-                                    personData.setId(response.getJSONObject().getString("id"));
-                                    personData.setName(response.getJSONObject().getString("name"));
-                                    personData.setBirthday(response.getJSONObject().getString("birthday"));
-                                    personData.setEmail(response.getJSONObject().getString("email"));
-                                    personData.setGender(response.getJSONObject().getString("gender"));
-                                    personData.setLink(response.getJSONObject().getString("link"));
-                                    personData.setTimezone(response.getJSONObject().getString("timezone"));
-                                    personData.setCover(response.getJSONObject().getString("cover"));
-                                    System.out.println(personData.toString());
+                                                @Override
+                                                public void success(ErrorResponse errorResponse) {
+                                                }
+                                            });*/
+                                        }
+                                    });
+                                    t.start();
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                }*/
+                                }
                                 Toast.makeText(getApplicationContext(), "SUCCESS, WE'VE DATA", Toast.LENGTH_LONG).show();
                             }
                         });
+
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,name,birthday,email,gender,link,timezone,cover");
                 request.setParameters(parameters);
                 request.executeAsync();
+
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
 
             @Override
             public void onCancel() {
-                // App code
                 Toast.makeText(getApplicationContext(), "CANCEL", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(FacebookException exception) {
-                // App code
                 Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -106,5 +140,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        profileTracker.stopTracking();
     }
 }

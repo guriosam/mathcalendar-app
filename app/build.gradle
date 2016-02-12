@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+def final URL_SERVER = "\"https://docs.google.com/\""
+
 android {
     compileSdkVersion 23
     buildToolsVersion "22.0.1"
@@ -16,6 +18,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            debuggable true
+            buildConfigField "String", "URL_SERVER", URL_SERVER
+        }
     }
 }
 
@@ -31,6 +38,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.bowyer.app:parsesendclient:0.1.0@aar'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
+    //compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     compile 'com.google.code.gson:gson:1.7.2'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
