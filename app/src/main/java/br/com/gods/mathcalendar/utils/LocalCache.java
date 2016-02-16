@@ -9,6 +9,8 @@ public class LocalCache {
 
     private boolean isVip = false;
 
+    private boolean isUserLogged = false;
+
     private int day = 1;
 
     private int month = 1;
@@ -43,5 +45,13 @@ public class LocalCache {
 
     public void setMonth(int month) {
         this.month = month;
+    }
+
+    public boolean isUserLogged() {
+        return isUserLogged;
+    }
+
+    public void setIsUserLogged(boolean isLogged) {
+        this.isUserLogged = isLogged;
     }
 }

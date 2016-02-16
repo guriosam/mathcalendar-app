@@ -22,8 +22,12 @@ public class MathCalendarApplication extends Application {
 
     public static MathCalendarApplication getMathCalendarApplicationContext() {
 
-        if (applicationContext == null) {
+        /*if (applicationContext == null) {
             throw new RuntimeException("O contexto da aplicação não foi iniciado.");
+        }*/
+
+        if (applicationContext == null) {
+            applicationContext = new MathCalendarApplication();
         }
 
         return applicationContext;

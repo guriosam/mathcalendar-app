@@ -15,7 +15,7 @@ public class MathCalendarServiceError {
     private Throwable error;
 
 
-    /*public MathCalendarServiceError(String message, Throwable error) {
+    public MathCalendarServiceError(String message, Throwable error) {
         this.message = message;
         this.error = error;
     }
@@ -48,7 +48,7 @@ public class MathCalendarServiceError {
         return error;
     }
 
-    public void setError(Throwable error) {
+    public void setResponse(Throwable error) {
         this.error = error;
     }
 
@@ -58,5 +58,5 @@ public class MathCalendarServiceError {
 
     public void setMessage(String message) {
         this.message = message;
-    }*/
+    }
 }

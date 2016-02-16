@@ -25,5 +25,7 @@
     <string name="facebook_app_id">214686515546313</string>
     <string name="error_load_image">There is not problem for weekends or holidays.</string>
     <string name="general_error">Sorry, something unexpected happened.</string>
+
+    <string name="error">BAZINGA</string>
 </resources>
 

@@ -87,6 +87,10 @@ public class UserData implements Serializable {
         this.cover = cover;
     }
 
+    public void setVip(String vip) {
+        this.vip = vip;
+    }
+
     @Override
     public String toString() {
 
@@ -94,12 +98,13 @@ public class UserData implements Serializable {
 
         s += s + id + "\n";
         s += s + name + "\n";
-        s += s + birthday + "\n";
-        s += s + email + "\n";
+        //s += s + birthday + "\n";
+        //s += s + email + "\n";
         s += s + gender + "\n";
         s += s + link + "\n";
         s += s + timezone + "\n";
         s += s + cover;
+        s += s + vip;
 
         return s;
     }
