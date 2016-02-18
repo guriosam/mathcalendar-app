@@ -20,13 +20,6 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLEncoder;
-
-import javax.net.ssl.HttpsURLConnection;
-
 import br.com.gods.mathcalendar.utils.LocalCache;
 
 public class LoginActivity extends AppCompatActivity {
@@ -50,15 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //EditText email = (EditText) findViewById(R.id.email_input);
-        //EditText password = (EditText) findViewById(R.id.password_input);
-
-        //Button confirm = (Button) findViewById(R.id.confirm_button);
-        //Button forgot = (Button) findViewById(R.id.forgot_button);
-
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        //loginButton.setReadPermissions("email");
-        //loginButton.setPublishPermissions("user_birthday");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -70,35 +55,16 @@ public class LoginActivity extends AppCompatActivity {
                             public void onCompleted(
                                     JSONObject object,
                                     final GraphResponse response) {
-                                /*final UserData userData = new UserData();
-                                if (!Objects.equals(response.getJSONObject().getString("id"), ""))
-                                    userData.setId(response.getJSONObject().getString("id"));
-                                if (!Objects.equals(response.getJSONObject().getString("name"), ""))
-                                    userData.setName(response.getJSONObject().getString("name"));
-                                if (!Objects.equals(response.getJSONObject().getString("birthday"), ""))
-                                    userData.setBirthday(response.getJSONObject().getString("birthday"));
-                                if (!Objects.equals(response.getJSONObject().getString("email"), ""))
-                                    userData.setEmail(response.getJSONObject().getString("email"));
-                                if (!Objects.equals(response.getJSONObject().getString("gender"), ""))
-                                    userData.setGender(response.getJSONObject().getString("gender"));
-                                if (!Objects.equals(response.getJSONObject().getString("link"), ""))
-                                    userData.setLink(response.getJSONObject().getString("link"));
-                                if (!Objects.equals(response.getJSONObject().getString("timezone"), ""))
-                                    userData.setTimezone(response.getJSONObject().getString("timezone"));
-                                if (!Objects.equals(response.getJSONObject().getString("cover"), ""))
-                                    userData.setCover(response.getJSONObject().getString("cover"));
-                                userData.setVip("FALSE");*/
 
                                 Thread t = new Thread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        //System.out.println("BEFORE SEND DATA");
                                         try {
                                             postData(response.getJSONObject().getString("id"),
                                                     response.getJSONObject().getString("name"),
                                                     null,
                                                     null,
-                                                    "FALSE");
+                                                    null);
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -106,13 +72,14 @@ public class LoginActivity extends AppCompatActivity {
                                 });
                                 t.start();
 
-                                Toast.makeText(getApplicationContext(), "SUCCESS, WE'VE DATA", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "SUCCESS, WE HAVE DATA", Toast.LENGTH_LONG).show();
                             }
                         });
 
                 Bundle parameters = new Bundle();
-                //parameters.putString("fields", "id,name,birthday,email,gender,link,timezone,cover"); //Add user_birthday, email on Facebook Review
-                parameters.putString("fields", "id,name,gender,link,timezone,cover");
+                //WAITING FACEBOOK REVIEW FOR ADD user_birthday, email INTO PARAMETERS
+                //parameters.putString("fields", "id,name,birthday,email,gender,timezone");
+                parameters.putString("fields", "id,name,gender,timezone");
                 request.setParameters(parameters);
                 request.executeAsync();
 
@@ -150,15 +117,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void postData(String id, String name, String age, String email, String vip) {
 
-        /*new DownloadWebpageTask(new AsyncResult() {
-            @Override
-            public void onResult(JSONObject object) {
-                processJson(object);
-            }
-        }).execute("https://spreadsheets.google.com/tq?key=1imXumnjFyOan7V92ZYCeWUnYbRwI8yXJH_PBTJNyGvw");*/
+        /**
+         * THE FOLLOWING CODE SNIPPET SENDS USER DATA TO A SPREADSHEET VIA HTTPSURLCONNECTION CLASS BUT ISN'T ENOUGH FOR US;
+         */
 
-        try {
-
+        /*try {
             URL urlSpreadsheet = new URL("https://docs.google.com/forms/d/1tHtUlccnw322kjb9KTbDaczqwxpNyLh3gxHUjmILnVI/formResponse");
             HttpsURLConnection connection = (HttpsURLConnection) urlSpreadsheet.openConnection();
             String urlParameters = "";
@@ -181,33 +144,8 @@ public class LoginActivity extends AppCompatActivity {
             dataOutputStream.writeBytes(urlParameters);
             dataOutputStream.flush();
             dataOutputStream.close();
-
-            //System.out.println("AFTER SEND DATA");
-            System.out.println("Response Code: " + connection.getResponseCode());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
-
-    /*private void processJson(JSONObject object) {
-
-        /*try {
-
-            JSONArray rows = object.getJSONArray("rows");
-
-            for (int r = 0; r < rows.length(); ++r) {
-                JSONObject row = rows.getJSONObject(r);
-                JSONArray columns = row.getJSONArray("c");
-
-                System.out.println(columns.getJSONObject(1).getString("v"));
-                System.out.println(columns.getJSONObject(2).getString("v"));
-                System.out.println(columns.getJSONObject(3).getString("f"));
-                System.out.println(columns.getJSONObject(4).getString("v"));
-                System.out.println(columns.getJSONObject(5).getString("f"));
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }*/
 }
